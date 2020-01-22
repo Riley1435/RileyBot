@@ -55,5 +55,25 @@ namespace DiscordBot
                 await ReplyAsync("Please ping to clean.");
             }
         }
+
+        [Command("name")]
+        public async Task UpdateNickNameAsync(SocketUser user, string message)
+        {
+            if (user != null && !string.IsNullOrEmpty(message))
+            {
+                var guild = Context.Guild;
+                var test = guild.GetUser(user.Id);
+                await test.ModifyAsync(x => { x.Nickname = message; });
+
+                // TODO Implement voting system via message reactions + time?
+                // TODO: Implement log to allow one user name change per day?
+                await ReplyAsync($"nickname updated.");
+            }
+            else
+            {
+                // clean members
+                await ReplyAsync("Please ping a user and a desired nickname.");
+            }
+        }
     }
 }
