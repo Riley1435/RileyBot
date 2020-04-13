@@ -1,14 +1,21 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DiscordBot
 {
     public class Commands : ModuleBase<SocketCommandContext>
     {
+        /// <summary>
+        /// TODO: Shows all points that a user has.
+        /// </summary>
+        /// <returns></returns>
         [Command("points")]
         public async Task Points()
         {
@@ -22,13 +29,22 @@ namespace DiscordBot
             await ReplyAsync($"{userInfo.Username} - {userInfo.Discriminator}");
         }
 
+        /// <summary>
+        /// TODO: Shows all available commands.
+        /// </summary>
+        /// <returns></returns>
         [Command("help")]
+        [Summary("Shows command")]
         public async Task Help()
         {
             await ReplyAsync("show help message");
         }
 
-        
+        /// <summary>
+        /// Ping test command.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [Command("test")]
         public async Task TestAsync(SocketUser user = null)
         {
@@ -42,6 +58,11 @@ namespace DiscordBot
             }
         }
 
+        /// <summary>
+        /// Pings a user and lets them know they are cleaned.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [Command("cleaned")]
         public async Task CleanedAsync(SocketUser user = null)
         {
@@ -51,28 +72,49 @@ namespace DiscordBot
             }
             else
             {
-                // clean members
                 await ReplyAsync("Please ping to clean.");
             }
         }
 
-        [Command("name")]
-        public async Task UpdateNickNameAsync(SocketUser user, string message)
+        /// <summary>
+        /// Adds emojis to a message to allow users to vote.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        [Command("vote")]
+        public async Task AddVotesEmojisAsync([Remainder]string message)
         {
-            if (user != null && !string.IsNullOrEmpty(message))
+            if (!string.IsNullOrEmpty(message.ToString()))
             {
-                var guild = Context.Guild;
-                var test = guild.GetUser(user.Id);
-                await test.ModifyAsync(x => { x.Nickname = message; });
-
-                // TODO Implement voting system via message reactions + time?
-                // TODO: Implement log to allow one user name change per day?
-                await ReplyAsync($"nickname updated.");
+                var yesEmoji = new Emoji("✅");
+                var noEmoji = new Emoji("❌"); 
+                await Context.Message.AddReactionAsync(yesEmoji);
+                await Context.Message.AddReactionAsync(noEmoji);
             }
             else
             {
-                // clean members
-                await ReplyAsync("Please ping a user and a desired nickname.");
+                await ReplyAsync("Please enter a message.");
+            }
+        }
+
+        /// <summary>
+        /// Changes a user's nickname in the Discord guild.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        [Command("name")]
+        public async Task ChangeNickname(SocketUser user, string message)
+        {
+            if (user != null && !string.IsNullOrEmpty(message))
+            {
+                var guildUser = Context.Guild.GetUser(user.Id);
+                await guildUser.ModifyAsync(x => { x.Nickname = message; });
+                await ReplyAsync("Nickname Updated.");
+            }
+            else
+            {
+                await ReplyAsync("Please ping a user with a desired nickname.");
             }
         }
     }
