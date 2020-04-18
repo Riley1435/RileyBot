@@ -14,6 +14,7 @@ namespace RileyBot
 {
     public class DatabaseCommands : ModuleBase<SocketCommandContext>
     {
+        #region User Commands
         [Command("newuser")]
         public async Task NewUser(SocketUser user = null)
         {
@@ -33,10 +34,16 @@ namespace RileyBot
                 {
                     await ReplyAsync($"Error adding <@{socketUser.Id}>");
                 }
-                await ReplyAsync($"<@{socketUser.Id}> has been added successfully.");
+                finally
+                {
+                    await ReplyAsync($"<@{socketUser.Id}> has been added successfully.");
+                }
             }
         }
 
+        #endregion
+
+        #region Drop Commands
         [Command("newdrop")]
         public async Task NewDrop(
             string name, 
@@ -47,7 +54,6 @@ namespace RileyBot
             var socketUser = user ?? Context.User;
             using (RileyBotContext context = new RileyBotContext())
             {
-                var id = context.Users.ToList();
                 try
                 {
                     context.Drops.Add(new Drop
@@ -91,6 +97,7 @@ namespace RileyBot
                 await ReplyAsync($"{sb.ToString()}");
             }
         }
+        #endregion
 
     }
 }
