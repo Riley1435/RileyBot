@@ -25,7 +25,7 @@ namespace DiscordBot
         [Command("user")]
         public async Task UserInfo(SocketUser user = null)
         {
-            var userInfo = user ?? Context.Client.CurrentUser;
+            var userInfo = user ?? Context.User;
             await ReplyAsync($"{userInfo.Username} - {userInfo.Discriminator}");
         }
 

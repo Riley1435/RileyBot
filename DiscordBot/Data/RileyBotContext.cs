@@ -11,16 +11,9 @@ namespace DiscordBot.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Drop> Drops { get; set; }
 
-        private static bool _created = false;
         public RileyBotContext()
         {
-            if (!_created)
-            {
-
-                _created = true;
-                Database.EnsureDeleted();
-                Database.EnsureCreated();
-            }
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

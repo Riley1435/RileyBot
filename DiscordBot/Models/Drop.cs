@@ -10,5 +10,6 @@ namespace RileyBot.Models
         public string Name { get; set; }
         public int Points { get; set; }
         public int KillCount { get; set; }
+        public int UserId { get; set; }
     }
 }
