@@ -10,5 +10,6 @@ namespace RileyBotDatabaseLibrary.Models
         public ulong DiscordId { get; set; }
         public DateTime Added { get; set; }
         public List<Drop> Drops { get; } = new List<Drop>();
+        public List<Link> Links { get; } = new List<Link>();
     }
 }

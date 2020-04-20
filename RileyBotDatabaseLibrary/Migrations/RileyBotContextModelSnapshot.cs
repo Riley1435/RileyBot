@@ -16,7 +16,7 @@ namespace RileyBotDatabaseLibrary.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3");
 
-            modelBuilder.Entity("RileyBot.Models.Drop", b =>
+            modelBuilder.Entity("RileyBotDatabaseLibrary.Models.Drop", b =>
                 {
                     b.Property<int>("DropId")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,26 @@ namespace RileyBotDatabaseLibrary.Migrations
                     b.ToTable("Drops");
                 });
 
-            modelBuilder.Entity("RileyBot.Models.User", b =>
+            modelBuilder.Entity("RileyBotDatabaseLibrary.Models.Link", b =>
+                {
+                    b.Property<int>("LinkId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("LinkUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("LinkId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Links");
+                });
+
+            modelBuilder.Entity("RileyBotDatabaseLibrary.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -61,13 +80,20 @@ namespace RileyBotDatabaseLibrary.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RileyBot.Models.Drop", b =>
+            modelBuilder.Entity("RileyBotDatabaseLibrary.Models.Drop", b =>
                 {
-                    b.HasOne("RileyBot.Models.User", null)
+                    b.HasOne("RileyBotDatabaseLibrary.Models.User", null)
                         .WithMany("Drops")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("RileyBotDatabaseLibrary.Models.Link", b =>
+                {
+                    b.HasOne("RileyBotDatabaseLibrary.Models.User", null)
+                        .WithMany("Links")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

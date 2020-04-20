@@ -10,10 +10,11 @@ namespace RileyBotDatabaseLibrary.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Drop> Drops { get; set; }
+        public DbSet<Link> Links { get; set; }
 
         public RileyBotContext()
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -30,3 +31,4 @@ namespace RileyBotDatabaseLibrary.Data
         }
     }
 }
+

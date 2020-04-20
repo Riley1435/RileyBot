@@ -113,5 +113,49 @@ namespace RileyBot
         }
         #endregion
 
+        #region Link Commands
+        [Command("newlink")]
+        public async Task NewLink(
+            string link,
+            SocketUser user = null)
+        {
+            var socketUser = user ?? Context.User;
+            using (RileyBotContext context = new RileyBotContext())
+            {
+                try
+                {
+                    context.Links.Add(new Link
+                    {
+                        LinkUrl = link,
+                        UserId = context.Users.Where(u => u.DiscordId == socketUser.Id).FirstOrDefault().UserId
+                    });
+                    context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    await ReplyAsync($"Error adding <@{socketUser.Id}'s Link>");
+                }
+                finally
+                {
+                    await ReplyAsync($"<@{socketUser.Id}>'s Link has been added successfully.");
+                }
+            }
+        }
+        #endregion
+
+        [Command("randomlink")]
+        public async Task RandomLink()
+        {
+            using (RileyBotContext context = new RileyBotContext())
+            {
+                int maxId = context.Links.Select(x => x.LinkId).Max();
+                var random = new Random();
+                int rng = random.Next(1, maxId);
+
+                Link link = context.Links.Where(x => x.LinkId == rng).FirstOrDefault();
+
+                await ReplyAsync($"{link.LinkUrl}");
+            }
+        }
     }
 }

@@ -43,9 +43,34 @@ namespace RileyBotDatabaseLibrary.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Links",
+                columns: table => new
+                {
+                    LinkId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    LinkUrl = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Links", x => x.LinkId);
+                    table.ForeignKey(
+                        name: "FK_Links_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Drops_UserId",
                 table: "Drops",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Links_UserId",
+                table: "Links",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -59,6 +84,9 @@ namespace RileyBotDatabaseLibrary.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Drops");
+
+            migrationBuilder.DropTable(
+                name: "Links");
 
             migrationBuilder.DropTable(
                 name: "Users");
