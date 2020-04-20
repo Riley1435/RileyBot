@@ -1,8 +1,8 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using DiscordBot.Data;
-using RileyBot.Models;
+using RileyBotDatabaseLibrary.Data;
+using RileyBotDatabaseLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +34,27 @@ namespace RileyBot
                 {
                     await ReplyAsync($"Error adding <@{socketUser.Id}>");
                 }
-                finally
-                {
-                    await ReplyAsync($"<@{socketUser.Id}> has been added successfully.");
-                }
+
+                await ReplyAsync($"<@{socketUser.Id}> has been added successfully.");
             }
         }
 
+        [Command("users")]
+        public async Task UsersTable(SocketUser user = null)
+        {
+            var socketUser = user ?? Context.User;
+            using (RileyBotContext context = new RileyBotContext())
+            {
+                var users = context.Users.ToList();
+                StringBuilder sb = new StringBuilder();
+                foreach (User u in users)
+                {
+                    sb.Append($"DiscordId: {u.DiscordId}, ");
+                }
+
+                await ReplyAsync($"{sb.ToString()}");
+            }
+        }
         #endregion
 
         #region Drop Commands

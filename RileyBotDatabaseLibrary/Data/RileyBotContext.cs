@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using RileyBot.Models;
+using RileyBotDatabaseLibrary.Models;
 
-namespace DiscordBot.Data
+namespace RileyBotDatabaseLibrary.Data
 {
     public class RileyBotContext : DbContext
     {
@@ -18,7 +18,7 @@ namespace DiscordBot.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite("Data Source=RileyBot.db");
+            options.UseSqlite(@"Data Source=C:\Users\riley\source\repos\RileyBot\RileyBotDatabaseLibrary\RileyBot.db");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

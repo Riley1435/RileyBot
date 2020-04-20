@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RileyBot.Models
+namespace RileyBotDatabaseLibrary.Models
 {
     public class Drop
     {
