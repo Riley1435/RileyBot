@@ -51,7 +51,7 @@ export class DropComponent extends Component {
     }
 
     async populateDropData() {
-        const response = await fetch('drop');
+        const response = await fetch('api/v1.0/drop');
         const data = await response.json();
         this.setState({ drops: data, loading: false });
     }

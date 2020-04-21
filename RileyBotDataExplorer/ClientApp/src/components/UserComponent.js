@@ -49,7 +49,7 @@ export class UserComponent extends Component {
   }
 
   async populateUserData() {
-    const response = await fetch('user');
+    const response = await fetch('api/v1.0/user');
     const data = await response.json();
     this.setState({ users: data, loading: false });
   }

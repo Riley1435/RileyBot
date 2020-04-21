@@ -47,7 +47,7 @@ export class LinkComponent extends Component {
     }
 
     async populateLinkData() {
-        const response = await fetch('link');
+        const response = await fetch('api/v1.0/link');
         const data = await response.json();
         this.setState({ links: data, loading: false });
     }
