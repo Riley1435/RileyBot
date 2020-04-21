@@ -8,6 +8,8 @@ using RileyBotDatabaseLibrary.Models;
 
 namespace RileyBotDataExplorer.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class DropController : ControllerBase
     {
         [HttpGet]
@@ -16,7 +18,7 @@ namespace RileyBotDataExplorer.Controllers
             using (RileyBotContext context = new RileyBotContext())
             {
                 var drops = context.Drops;
-                return drops;
+                return drops.ToArray();
             }
         }
     }

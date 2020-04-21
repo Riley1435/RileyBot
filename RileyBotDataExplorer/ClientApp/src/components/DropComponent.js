@@ -45,7 +45,6 @@ export class DropComponent extends Component {
         return (
             <div>
                 <h1 id="tabelLabel" >RileyBot Drops</h1>
-                <p>This component demonstrates fetching data from the server.</p>
                 {contents}
             </div>
         );

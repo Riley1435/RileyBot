@@ -41,7 +41,6 @@ export class LinkComponent extends Component {
         return (
             <div>
                 <h1 id="tabelLabel" >RileyBot Links</h1>
-                <p>This component demonstrates fetching data from the server.</p>
                 {contents}
             </div>
         );
