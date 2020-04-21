@@ -10,15 +10,16 @@ namespace RileyBotDataExplorer.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class LinkController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IEnumerable<Link> Get()
         {
             using (RileyBotContext context = new RileyBotContext())
             {
-                var users = context.Users.ToArray();
-                return users;
+                var links = context.Links;
+                var l = links.ToArray();
+                return l;
             }
         }
     }

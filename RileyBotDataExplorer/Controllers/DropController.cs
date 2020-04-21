@@ -8,17 +8,15 @@ using RileyBotDatabaseLibrary.Models;
 
 namespace RileyBotDataExplorer.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class DropController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IEnumerable<Drop> Get()
         {
             using (RileyBotContext context = new RileyBotContext())
             {
-                var users = context.Users.ToArray();
-                return users;
+                var drops = context.Drops;
+                return drops;
             }
         }
     }
