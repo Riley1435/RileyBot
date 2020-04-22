@@ -21,7 +21,9 @@ namespace RileyBot
             var socketUser = user ?? Context.User;
             using (RileyBotContext context = new RileyBotContext())
             {
-                try
+                bool found = context.Users.Any(u => u.DiscordId == socketUser.Id);
+
+                if (!found)
                 {
                     context.Users.Add(new User
                     {
@@ -29,13 +31,13 @@ namespace RileyBot
                         Added = DateTime.Now
                     });
                     context.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    await ReplyAsync($"Error adding <@{socketUser.Id}>");
-                }
 
-                await ReplyAsync($"<@{socketUser.Id}> has been added successfully.");
+                    await ReplyAsync($"<@{socketUser.Id}> has been added successfully.");
+                }
+                else
+                {
+                    await ReplyAsync($"Error adding <@{socketUser.Id}>. User already exists.");
+                }
             }
         }
 
