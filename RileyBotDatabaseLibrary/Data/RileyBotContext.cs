@@ -20,7 +20,7 @@ namespace RileyBotDatabaseLibrary.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // Direct path to RileyBot.db 
-            options.UseSqlite(@"Data Source=C:\Users\riley\source\repos\RileyBot\RileyBotDatabaseLibrary\RileyBot.db");
+            options.UseSqlite(@"Data Source=");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
